@@ -48,7 +48,7 @@ class getdata_c():
                 
         date = [ dt.datetime.strptime(date[x], "%Y%m%d%H%M") for x in range(len(date)) ]
         
-        self.data={'date': np.array(date), 'u_wind': np.array(wdir), 'v_wind': np.array(wdir), 'pres': np.array(pres)}
+        self.data={'date': np.array(date), 'u_wind': np.array(u_wind), 'v_wind': np.array(v_wind), 'pres': np.array(pres)}
         
     def __repr__(self):
         return self.data
