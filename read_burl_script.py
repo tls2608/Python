@@ -22,12 +22,14 @@ pres = []
 wspd = []
 wdir = []
 date = []
+u_wind = []
+v_wind = []
 
 # Importing the data from dat file
 for line in f.readlines()[2:]:
     data = line.split()
     pres.append( float(data[12]) )
-    wdir.append( int(data[5]) )
+    wdir.append( float(data[5]) * (np.pi/180) )
     wspd.append( float(data[6]) )
     date.append( str(data[0] + data[1] + data[2] + data[3] +  data[4]) )
     
@@ -37,16 +39,13 @@ wdir = np.array(wdir)
 wspd = np.array(wspd)
 date = np.array(date)
 
-# This corrects the wind direction
-for x in range(len(wdir)):
-    if wdir[x]<180:
-        wdir[x]=wdir[x]+180
-    else:
-        wdir[x]=wdir[x]-180
+# This calculates the E-W and N-S wind vectors u and v
+u_wind = -wspd * np.sin(wdir)
+v_wind = -wspd * np.cos(wdir)
 
 # This converts the date string to a datetime object
 date = [ dt.datetime.strptime(date[x], "%Y%m%d%H%M") for x in range(len(date)) ]
 
-data={'date': np.array(date), 'wdir': np.array(wdir), 'wspd': np.array(wspd), 'pres': np.array(pres)}
+data={'date': np.array(date), 'u_wind': np.array(wdir), 'v_wind': np.array(wdir), 'pres': np.array(pres)}
 
 print data
